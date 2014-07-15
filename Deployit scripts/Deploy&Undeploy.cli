@@ -1,0 +1,12 @@
+#Deploy a package:
+package = repository.read('Applications/NerdDinner/2.0')
+environment = repository.read('Environments/dev')
+deploymentRef = deployment.prepareInitial(package.id, environment.id)
+deploymentRef = deployment.generateAllDeployeds(deploymentRef)
+taskID = deployment.deploy(deploymentRef).id
+deployit.assignTask(taskID, 'admin')
+deployit.startTask(taskID)
+ 
+#Undeploy a package:
+taskID = deployment.undeploy('Environments/dev/NerdDinner').id
+deployit.startTaskAndWait(taskID)
